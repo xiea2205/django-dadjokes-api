@@ -23,6 +23,10 @@ except ImportError:
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Detect environment
+import socket
+HOSTNAME = socket.gethostname()
+DEBUG = 'csa2.bu.edu' not in HOSTNAME
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -31,9 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-he5*w8dy9w$18*mbo55&f!a@-i+b#zn6v20f)9ncr+gbu$2!as'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['cs-webapps.bu.edu', 'csa2.bu.edu', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -126,7 +128,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+if 'csa2.bu.edu' in HOSTNAME:
+    # Production on BU server
+    STATIC_URL = '/xiea/static/'
+    STATIC_ROOT = '/home/ugrad/xiea/public_html/static/'
+else:
+    # Local development
+    STATIC_URL = 'static/'
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
