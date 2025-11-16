@@ -1,0 +1,18 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block title %}Picture Details{% endblock %}
+
+{% block content %}
+    <h1>Picture Details</h1>
+
+    <div class="picture">
+        <img src="{{ picture.image_url }}" alt="Picture by {{ picture.contributor_name }}">
+        <div class="contributor">Contributed by: {{ picture.contributor_name }}</div>
+        <div class="contributor">Created: {{ picture.created_at|date:"F j, Y, g:i a" }}</div>
+        <div class="contributor">ID: {{ picture.pk }}</div>
+        <div class="contributor">URL: {{ picture.image_url }}</div>
+    </div>
+
+    <br>
+    <a href="{% url 'pictures' %}">Back to All Pictures</a>
+{% endblock %}
