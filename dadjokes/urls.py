@@ -7,6 +7,7 @@ urlpatterns = [
     path('random/', views.random_view, name='random'),
     path('jokes/', views.jokes_view, name='jokes'),
     path('joke/<int:pk>/', views.joke_detail_view, name='joke_detail'),
+    path('add-joke/', views.add_joke_view, name='add_joke'),
     path('pictures/', views.pictures_view, name='pictures'),
     path('picture/<int:pk>/', views.picture_detail_view, name='picture_detail'),
 

@@ -1,0 +1,59 @@
+{% extends 'dadjokes/base.html' %}
+
+{% block title %}Add New Joke{% endblock %}
+
+{% block content %}
+    <h1>Add a New Dad Joke</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 10px; margin: 10px 0; border-radius: 5px;
+                        background-color: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+                        color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" style="max-width: 600px;">
+        {% csrf_token %}
+
+        <div style="margin-bottom: 15px;">
+            <label for="text" style="display: block; margin-bottom: 5px; font-weight: bold;">
+                Joke Text:
+            </label>
+            <textarea
+                name="text"
+                id="text"
+                rows="4"
+                required
+                style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-family: Arial, sans-serif;"
+                placeholder="Enter your dad joke here..."></textarea>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="contributor_name" style="display: block; margin-bottom: 5px; font-weight: bold;">
+                Your Name:
+            </label>
+            <input
+                type="text"
+                name="contributor_name"
+                id="contributor_name"
+                required
+                style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;"
+                placeholder="Enter your name">
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button
+                type="submit"
+                style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+                Add Joke
+            </button>
+            <a href="{% url 'jokes' %}"
+               style="margin-left: 10px; padding: 10px 20px; text-decoration: none; color: #666; border: 1px solid #ddd; border-radius: 5px; display: inline-block;">
+                Cancel
+            </a>
+        </div>
+    </form>
+{% endblock %}

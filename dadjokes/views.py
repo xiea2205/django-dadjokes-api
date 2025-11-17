@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from rest_framework import generics, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -44,6 +45,22 @@ def picture_detail_view(request, pk):
     """Display a single picture by ID"""
     picture = get_object_or_404(Picture, pk=pk)
     return render(request, 'dadjokes/picture_detail.html', {'picture': picture})
+
+
+def add_joke_view(request):
+    """Display form to add a new joke and handle submission"""
+    if request.method == 'POST':
+        text = request.POST.get('text', '').strip()
+        contributor_name = request.POST.get('contributor_name', '').strip()
+
+        if text and contributor_name:
+            Joke.objects.create(text=text, contributor_name=contributor_name)
+            messages.success(request, 'Joke added successfully!')
+            return redirect('jokes')
+        else:
+            messages.error(request, 'Both joke text and contributor name are required.')
+
+    return render(request, 'dadjokes/add_joke.html')
 
 
 # REST API Views
